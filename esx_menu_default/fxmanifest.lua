@@ -1,5 +1,4 @@
-fx_version 'adamant'
-
+fx_version 'cerulean'
 game 'gta5'
 
 client_scripts {
@@ -33,6 +32,4 @@ client_scripts {
 	'client/main.lua'
 }
 
-dependencies({
-	'es_extended'
-})
+dependency 'es_extended'

